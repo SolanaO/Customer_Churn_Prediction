@@ -1,6 +1,7 @@
 # Project specific files and folders
 aux_p4/
 data/
+models/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
