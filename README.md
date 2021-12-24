@@ -38,6 +38,7 @@ The code is written on Anaconda Jupyter Notebook with a Python 3 kernel. Additio
 - Numpy 1.21.2
 - Matplotlib 3.5.0
 - Seaborn 0.11.2
+
 Full list to set up an environment can be found in the requirements.txt file.
 
 ## Screenshots
@@ -45,19 +46,21 @@ Full list to set up an environment can be found in the requirements.txt file.
 ![Likes, dislikes, upgrades, downgrades](./images/like_dislike.png)
 <!-- If you have screenshots you'd like to share, include them here. -->
 ![Barplot for the models trained on the full dataset](./images/full_data_mets_graph.png)
-![Perfrmance of the models trained on the full dataset](./images/full_data_mets.png)
+![Perfrmance of the models trained on the full dataset](./images/full_data_metrics.png)
 
 
 ## Project Structure
 ------------
 
     ├── LICENSE
-    ├── README.md          <- The top-level README for developers using this project.
+    ├── README.md          <- The top-level README for developers using this    project.
     │
-    ├── Sparkify_Data_Description.ipynb <- univariate analysis on small dataset
-    notebooks - Python 3 kernel.                      
-    |── Sparkify_FullDataset_AWS.ipynb   <- EDA, data processing and modeling on full dataset - PySpark kernel.
-    |── Sparkify_Small_Dataset.ipynb <- EDA, dataprocessing and modeling on small dataset, includes visualizations, Python 3 kernel.
+    ├── Sparkify_Data_Description.ipynb <- univariate analysis on
+    │                              small dataset - Python 3 kernel. │                       
+    |── Sparkify_FullDataset_AWS.ipynb   <- EDA, data processing and modeling │                                       on full dataset - PySpark kernel.
+    |── Sparkify_Small_Dataset.ipynb <- EDA, dataprocessing and modeling
+    │                                      on small dataset, includes
+    │                                      visualizations, Python 3 kernel.
     │  
     ├── images            <- Generated graphics to be used in reporting.
     │  
