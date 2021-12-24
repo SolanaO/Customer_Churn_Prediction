@@ -1,87 +1,76 @@
-# udacity_ds_p4
-Capstone project in data science nanodegree.
-# Project Name
-> Outline a brief description of your project.
-> Live demo [_here_](https://www.example.com). <!-- If you have the project hosted somewhere, include the link here. -->
+# Churn Prediction with PySpark
+
+This is the Capstone Project for the Data Scientist Nanodegree with Udacity.
+
+For a description see the [Medium](https://medium.com/@silviaonofrei/predict-churn-with-pyspark-b7cfe2fa139e) blog.
+
+![Songs Wordcloud in Sparkify](./images/sparkify_songs.png)
 
 ## Table of Contents
-* [General Info](#general-information)
+* [General Information](#general-information)
 * [Technologies Used](#technologies-used)
-* [Features](#features)
+* [Cloud Settings](#cloud)
+* [Local Installation Setup](#setup)
 * [Screenshots](#screenshots)
-* [Setup](#setup)
-* [Usage](#usage)
-* [Project Status](#project-status)
-* [Room for Improvement](#room-for-improvement)
 * [Acknowledgements](#acknowledgements)
-* [Contact](#contact)
 <!-- * [License](#license) -->
 
 
 ## General Information
-- Provide general information about your project here.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
-- Why did you undertake it?
-<!-- You don't have to answer all the questions - just the ones relevant to your project. -->
+
+Predicting churn is an essential aspect for any online subscription business, such as a streaming music platform. In the present project, we are investigating and predicting churn for a fictional music platform called Sparkify.
 
 
-## Technologies Used
-- Tech 1 - version 1.0
-- Tech 2 - version 2.0
-- Tech 3 - version 3.0
+## Cloud Settings
+
+To train the full dataset I used an AWS-EMR cluster with the following configurations:
+- release label: emr-5.30.1
+- applications: PySpark 2.4.5, Zepelin 0.8.2
+- instance type: m5.xlarge
+- number of instances: 5 (1 master, 4 cores)
 
 
-## Features
-List the ready features here:
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
+## Local Instalation Setup
 
+The code is written on Anaconda Jupyter Notebook with a Python 3 kernel. Additional libraries and modules:
+- PySpark 3.1.2
+- Pandas 1.3.4
+- Numpy 1.21.2
+- Matplotlib 3.5.0
+- Seaborn 0.11.2
+Full list to set up an environment can be found in the requirements.txt file.
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+
+![Likes, dislikes, upgrades, downgrades](./images/like_dislike.png)
 <!-- If you have screenshots you'd like to share, include them here. -->
+![Barplot for the models trained on the full dataset](./images/full_data_mets_graph.png)
+![Perfrmance of the models trained on the full dataset](./images/full_data_mets.png)
 
 
-## Setup
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
+## Project Structure
+------------
 
-Proceed to describe how to install / setup one's local environment / get started with the project.
-
-
-## Usage
-How does one go about using it?
-Provide various use cases and code examples here.
-
-`write-your-code-here`
-
-
-## Project Status
-Project is: _in progress_ / _complete_ / _no longer being worked on_. If you are no longer working on it, provide reasons why.
-
-
-## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
-Room for improvement:
-- Improvement to be done 1
-- Improvement to be done 2
-
-To do:
-- Feature to be added 1
-- Feature to be added 2
-
+    ├── LICENSE
+    ├── README.md          <- The top-level README for developers using this project.
+    │
+    ├── Sparkify_Data_Description.ipynb <- univariate analysis on small dataset
+    notebooks - Python 3 kernel.                      
+    |── Sparkify_FullDataset_AWS.ipynb   <- EDA, data processing and modeling on full dataset - PySpark kernel.
+    |── Sparkify_Small_Dataset.ipynb <- EDA, dataprocessing and modeling on small dataset, includes visualizations, Python 3 kernel.
+    │  
+    ├── images            <- Generated graphics to be used in reporting.
+    │  
+    ├── requirements.txt   <- The requirements file for reproducing the analysis environment.
+    │
+    ├── reports           <- Static files of the notebooks.
+    |
+    ├── .gitignore      <- Files to be ignored by Git.
+    └──
 
 ## Acknowledgements
-Give credit here.
-- This project was inspired by...
-- This project was based on [this tutorial](https://www.example.com).
-- Many thanks to...
 
-
-## Contact
-Created by [@](https://www.) - feel free to contact me!
+- Many thanks to Udacity who suggested the problem and provided the interesting datasets.
 
 
 <!-- Optional -->
