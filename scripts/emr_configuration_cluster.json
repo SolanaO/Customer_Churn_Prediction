@@ -1,0 +1,20 @@
+[
+ {
+   "classification": "livy-conf",
+   "properties": {
+      "livy.server.session.timeout":"4h"
+      },
+    "configurations": []
+},
+
+{
+  "classification": "spark",
+   "properties": {
+     "maximizeResourceAllocation": "true",
+     "spark.executor.memory": "8g",
+     "spark.driver.memory": "24g",
+     "spark.pyspark.virtualenv.enabled": "true"
+     },
+    "configurations": []
+    }
+]
