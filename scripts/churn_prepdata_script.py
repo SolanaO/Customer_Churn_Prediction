@@ -23,8 +23,7 @@ from pyspark.sql.functions import (
     desc, asc,
     avg, count, countDistinct,
     when, isnull, isnan,
-    from_unixtime,
-    datediff,
+    from_unixtime, datediff,
     )
 
 # build a Spark session using the SparkSession APIs
@@ -94,7 +93,7 @@ def clean_data(df):
     initial_records = df.count()
     print("Dataset has {} rows initially.".format(initial_records))
 
-    # filter out all the records without userId
+    # remove all the records without userId
     df = df.where(df.userId != "")
 
     # rescale the timestamp to seconds (initially in miliseconds)
@@ -167,12 +166,14 @@ def preprocess_data(df):
     # create window: data grouped by userId, time ordered
     win_user = (W.partitionBy("userId")
             .orderBy("log_ts")
-            .rangeBetween(W.unboundedPreceding, W.unboundedFollowing))
+            .rangeBetween(W.unboundedPreceding,
+                          W.unboundedFollowing))
 
     # create window: data grouped by sessionId and userId, time ordered
     win_user_session = (W.partitionBy("sessionId", "userId")
                         .orderBy("log_ts")
-                        .rangeBetween(W.unboundedPreceding, W.unboundedFollowing))
+                        .rangeBetween(W.unboundedPreceding,
+                                      W.unboundedFollowing))
 
     # record the first time an user is active
     df = df.withColumn("firstevent_ts", first(col("log_ts")).over(win_user))
@@ -279,14 +280,13 @@ def build_features(df):
             avg(col("session_h")).alias("avg_sess_h"),
 
             # compute the average number of page actions per sesssion - i.e. items in session
-            (countDistinct("itemInSession")/countDistinct("sessionId")).alias("acts_per_session"),
+            (countDistinct("itemInSession") /countDistinct("sessionId")).alias("acts_per_session"),
 
             # compute the average number of songs per session
-            (count(when(col("page") == "NextSong",                            True))/countDistinct("sessionId")).alias("songs_per_session"),
+            (count(when(col("page") == "NextSong", True)) /countDistinct("sessionId")).alias("songs_per_session"),
 
             # compute the average number of ads per session
-             (count(when(col("page") == "Roll Advert",
-                                          True))/countDistinct("sessionId")).alias("ads_per_session"),
+             (count(when(col("page") == "Roll Advert", True)) /countDistinct("sessionId")).alias("ads_per_session"),
 
             # days between registration and first activity
             first(col("init_days_interv")).alias("init_days_interv"),
