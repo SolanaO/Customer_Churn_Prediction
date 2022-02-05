@@ -42,11 +42,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 
-# import library for enhanced plotting
-
-import seaborn as sns
-sns.set_style("darkgrid")
-colors = sns.color_palette('PuBuGn_r')
 
 ###############################################
 ###############################################
@@ -258,7 +253,8 @@ def build_features(df):
 
             count(when(col("page") == "Add Friend", True)).alias("nr_friends"),
 
-            count(when(col("page") == "Thumbs Up", True)).alias("nr_likes"),                count(when(col("page") == "Thumbs Down", True)).alias("nr_dislikes"),
+            count(when(col("page") == "Thumbs Up", True)).alias("nr_likes"),
+            count(when(col("page") == "Thumbs Down", True)).alias("nr_dislikes"),
 
             count(when(col("page") == "Downgrade", True)).alias("nr_downgrades"),
             count(when(col("page") == "Upgrade", True)).alias("nr_upgrades"),
@@ -311,19 +307,22 @@ def build_features(df):
     # columns to drop
     drop_cols = ("userId", "gender", "avg_sess_h",
                  "nr_playlist", "nr_home")
+
     # drop the columns
-    #df_feats = df_feats.drop("userId")
     df_feats = df_feats.drop(*drop_cols)
 
+    # drop userId column only
+    #df_feats = df_feats.drop("userId")
+
+    
     # drop the null values
     df_feats=df_feats.na.drop()
 
     return df_feats
 
 
-SPLIT_VALS = [.7, .3]
-
 # split the data into train and test sets
+SPLIT_VALS = [.7, .3]
 
 def split_data (df):
 
