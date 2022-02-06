@@ -1,0 +1,26 @@
+[{"classification":"spark",
+    "properties":{
+        "spark.executor.memory": "8g",
+        "spark.driver.memory": "24g",                    "spark.pyspark.virtualenv.enabled":"true"
+        }
+},
+{"classification":"spark-defaults",
+    "properties":{
+        "spark.network.timeout":"1500"
+        }
+},
+{"classification":"hdfs-site",
+    "properties":{
+        "dfs.replication":"2"
+        }
+},
+{"classification":"livy-conf",
+    "properties":{
+        "livy.server.session.timeout":"10h"
+        }
+},
+{"classification":"emrfs-site",
+    "properties":{
+        "fs.s3.maxConnections":"100"
+        }
+}]
