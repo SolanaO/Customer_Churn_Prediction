@@ -17,7 +17,5 @@ pip3 install matplotlib==3.4.3
 pip3 freeze
 pip3 install seaborn==0.11.2 -v
 pip3 freeze
-pip3 install sklearn==0.0 -v
-pip3 freeze
 
 PYSPARK_PYTHON=/home/hadoop/path/to/venv/bin/python3
