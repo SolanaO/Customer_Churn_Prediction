@@ -110,7 +110,12 @@ test_cached = df_test.cache()
 
 # split the features and the label
 CAT_FEATURES = ["level"]
-CONT_FEATURES = ["nr_songs", "nr_likes", "nr_dislikes", "nr_friends",   "nr_downgrades", "nr_upgrades", "nr_error", "nr_settings", "nr_ads", "nr_sessions", "n_acts", "acts_per_session", "songs_per_session", "ads_per_session", "init_days_interv", "tenure_days_interv", "active_days"]
+
+CONT_FEATURES = ["nr_songs", "nr_likes", "nr_dislikes", "nr_friends",   
+"nr_downgrades", "nr_upgrades", "nr_error", "nr_settings", "nr_ads", 
+"nr_sessions", "n_acts", "acts_per_session", "songs_per_session", 
+"ads_per_session", "init_days_interv", "tenure_days_interv", "active_days"]
+
 CHURN_LABEL = "churn"
 
 # create labels and features
