@@ -212,7 +212,7 @@ def plot_roc_pr_curves(predictions, model_name):
 
 
 # function to plot two roc and two pr curves on two side by side plots
-def plot_roc_pr_curves(predictions_model1, predictions_model2, model1, model2):
+def plot_roc_pr_best_curves(predictions_model1, predictions_model2, model1, model2):
 
     """
     Plots the ROC and PR curves for two models on the same graphs.
