@@ -73,12 +73,13 @@ from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import f1_score
 from sklearn.metrics import auc, roc_curve, roc_auc_score
 
+################################################################
+################################################################
 
-
-## MODEL EVALUATORS
+## MODELs EVALUATORS FUNCTIONS
 
 # function to compute relevant metrics for binary classification
-def conf_metrics(dataset, evaluator):
+def conf_metrics(dataset):
 
     """
     Calculates the metrics associated to the confusion matrix.
@@ -86,17 +87,13 @@ def conf_metrics(dataset, evaluator):
     INPUT:
         dataset (pyspark.sql.DataFrame) - a dataset that contains
                             labels and predictions
-        evaluator (pyspark class) - class to compute metrics for predictions
 
     OUTPUT:
         accuracy (float) - metric
         precision (float) - metric
         recall (float) - metric
         F1 (float) - metric
-        roc_cl (float) - ROC-AUC score
-        pr_cl (float) - PR-Auc score
     """
-
 
     # calculate the elements of the confusion matrix
     tn = dataset.where((dataset[labelCol]==0) & (dataset[predCol]==0)).count()
@@ -110,23 +107,20 @@ def conf_metrics(dataset, evaluator):
     recall = tp / (tp + fn)
     f1 =  2 * (precision*recall) / (precision + recall)
 
-    # calculate auc metrics
-    roc_cl = evaluator.evaluate(dataset, {evaluator.metricName: "areaUnderROC"})
-    pr_cl = evaluator.evaluate(dataset, {evaluator.metricName: "areaUnderPR"})
-
-    return accuracy, precision, recall, f1, roc_cl, pr_cl
+    return accuracy, precision, recall, f1
 
 
 # function to display the metrics of interest
-def display_metrics(dataset):
+def display_metrics(dataset, roc_cl, pr_cl):
 
     """
     Prints evaluation metrics for the model.
 
     INPUT:
-         dataset (pyspark.sql.DataFrame) - a dataset that contains
+        dataset (pyspark.sql.DataFrame) - a dataset that contains
                                 labels and predictions
-        evaluator - evaluator for the classifier
+    OUTPUT:
+        none - table of metrics is displayed
 
     """
 
@@ -135,8 +129,6 @@ def display_metrics(dataset):
     precision = conf_metrics(dataset)[1]
     recall = conf_metrics(dataset)[2]
     f1 = conf_metrics(dataset)[3]
-    roc_auc = conf_metrics(dataset)[4]
-    pr_auc = conf_metrics(dataset)[5]
 
 
     print("")
@@ -151,11 +143,12 @@ def display_metrics(dataset):
     print("auc_pr.................%6.3f" % pr_auc)
 
 
-# function to print the ROC and PR curves
+# function to print the ROC and PR curves side by side
 def plot_roc_pr_curves(predictions, model_name):
 
     """
     Calculates ROC-AUC and PR-AUC scores and plots the ROC and PR curves.
+    Uses Pandas dataframes.
 
     INPUT:
         predictions (PySpark dataframe) - contains probability predictions, label column
@@ -181,9 +174,6 @@ def plot_roc_pr_curves(predictions, model_name):
     precision, recall, _ = precision_recall_curve(pred_pandas.label, pred_pandas.probability.str[1])
     # calculate pr auc score
     pr_auc = auc(recall, precision)
-
-    # to work with pyspark
-    #plt.clf()
 
     # create figure which contains two subplots
     plt.figure(figsize=[12,6])
@@ -219,11 +209,9 @@ def plot_roc_pr_curves(predictions, model_name):
 
     # show the plot
     plt.show()
-    # display the plot on aws
-    #%matplot plt
 
 
-# function to plot two roc and two pr curves on two graphs
+# function to plot two roc and two pr curves on two side by side plots
 def plot_roc_pr_curves(predictions_model1, predictions_model2, model1, model2):
 
     """
@@ -265,9 +253,6 @@ def plot_roc_pr_curves(predictions_model1, predictions_model2, model1, model2):
     # calculate pr auc score for the second model
     pr_auc2 = auc(recall2, precision2)
 
-    # to work with pyspark
-    #plt.clf()
-
     # create figure which contains two subplots
     plt.figure(figsize=[12,6])
 
@@ -275,8 +260,8 @@ def plot_roc_pr_curves(predictions_model1, predictions_model2, model1, model2):
 
     # plot the roc curve for the model1
     plt.plot(ns_fpr1, ns_tpr1, linestyle='--', label='No Skill')
-    plt.plot(fpr1, tpr1, marker='.', color='firebrick', label=model1 + 'ROC AUC = %.3f' % (roc_auc1))
-    plt.plot(fpr2, tpr2, marker='.', color='green', label=model2 + 'ROC AUC = %.3f' % (roc_auc2))
+    plt.plot(fpr1, tpr1, marker='.', color='firebrick', label=model1 + ': ROC AUC = %.3f' % (roc_auc1))
+    plt.plot(fpr2, tpr2, marker='.', color='green', label=model2 + ': ROC AUC = %.3f' % (roc_auc2))
 
     # axis labels
     plt.xlabel('False Positive Rate')
@@ -289,11 +274,8 @@ def plot_roc_pr_curves(predictions_model1, predictions_model2, model1, model2):
     plt.subplot(122)
 
     # plot the precision-recall curves
-
-    #ns_line = len(pred_pandas[pred_pandas.label==1]) / len(pred_pandas.label)
-    #plt.plot([0, 1], [ns_line, ns_line], linestyle='--', label='No Skill')
-    plt.plot(recall1, precision1, marker='.', color="firebrick", label=model1+ 'PR AUC = %.3f' % (pr_auc1))
-    plt.plot(recall2, precision2, marker='.', color="green", label=model2+'PR AUC = %.3f' % (pr_auc2))
+    plt.plot(recall1, precision1, marker='.', color="firebrick", label=model1+ ': PR AUC = %.3f' % (pr_auc1))
+    plt.plot(recall2, precision2, marker='.', color="green", label=model2+': PR AUC = %.3f' % (pr_auc2))
 
     # axis labels
     plt.xlabel('Recall')
@@ -302,6 +284,3 @@ def plot_roc_pr_curves(predictions_model1, predictions_model2, model1, model2):
     plt.legend()
     # figure title
     plt.title("Precision-Recall Curves")
-
-    # display the plot on aws
-    #%matplot plt
