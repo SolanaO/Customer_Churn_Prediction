@@ -73,49 +73,14 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import auc, roc_curve, roc_auc_score
 
 
-## LOAD DATA
-
-def load_data(file_path):
-    """
-    Loads the raw dataset in Spark.
-
-    INPUT:
-            (str) - path for datafile
-    OUTPUT:
-            (PySpark dataframe) - dataframe of raw data
-
-    """
-
-    print("Loading the dataset ...")
-    df = spark.read.json(file_path)
-    print("Dataset is loaded...")
-
-    return df
-
-# path for the train set file
-path_trainset = "data/mini_train.json"
-# upload the train data
-df_train = load_data(path_trainset)
-# path for the train set file
-path_testset = "data/mini_test.json"
-# upload the train data
-df_test = load_data(path_testset)
-
-# toggle the memory
-train_cached = df_train.cache()
-test_cached = df_test.cache()
-
-
 ## BUILD PIPELINES
 
 # split the features and the label
 CAT_FEATURES = ["level"]
-
-CONT_FEATURES = ["nr_songs", "nr_likes", "nr_dislikes", "nr_friends",   
-"nr_downgrades", "nr_upgrades", "nr_error", "nr_settings", "nr_ads", 
-"nr_sessions", "n_acts", "acts_per_session", "songs_per_session", 
+CONT_FEATURES = ["nr_songs", "nr_likes", "nr_dislikes", "nr_friends",
+"nr_downgrades", "nr_upgrades", "nr_error", "nr_settings", "nr_ads",
+"nr_sessions", "n_acts", "acts_per_session", "songs_per_session",
 "ads_per_session", "init_days_interv", "tenure_days_interv", "active_days"]
-
 CHURN_LABEL = "churn"
 
 # create labels and features
@@ -131,7 +96,7 @@ def build_full_pipeline(classifier):
     stages = []
 
     # encode the labels
-    label_indexer =  StringIndexer(inputCol=CHURN_LABEL, outputCol="label")
+    label_indexer =  StringIndexer(inputCol=CHURN_LABEL, outputCol=LABELCOL)
     # add the indexer to the pipeline
     stages += [label_indexer]
 
@@ -141,7 +106,7 @@ def build_full_pipeline(classifier):
     stages += [bin_assembler]
 
     # encode the continuous features
-    cont_assembler = VectorAssembler(inputCols = CONT_FEATURES, outputCol="cont_features")
+    cont_assembler = VectorAssembler(inputCols = CONT_FEATURES, outputCol=FEATURESCOL)
     # add the vector assembler to the pipeline
     stages += [cont_assembler]
     # normalize the continuous features
@@ -150,7 +115,7 @@ def build_full_pipeline(classifier):
     stages += [cont_scaler]
 
     # pass all to the vector assembler to create a single sparse vector
-    all_assembler = VectorAssembler(inputCols=["bin_features", "cont_scaler"],  outputCol="features")
+    all_assembler = VectorAssembler(inputCols=["bin_features", "cont_scaler"],  outputCol=FEATURESCOL)
     # add the vector assemble to the pipeline
     stages += [all_assembler]
 
@@ -182,3 +147,51 @@ def grid_search_model(pipeline, param):
                     numFolds=5,
                     parallelism=2)
     return cv
+
+
+## Pipeline for Stacking Model - Meta Classifier
+
+# split the features and the label
+META_FEATURES = ["pred_lr", "pred_rf","pred_gbt", "pred_mlpc", "pred_lsvc"]
+META_CONT_FEATURES = ["prob_lr", "prob_rf", "prob_mlpc"]
+META_LABEL_COL = "label"
+
+# create labels and features
+meta_predCol="meta_prediction"
+meta_labelCol="meta_label"
+meta_featuresCol = "meta_features"
+
+def build_meta_pipeline(meta_classifier):
+    """
+    Combines all the stages of the meta features processing.
+    """
+    # stages in the pipeline
+    stages = []
+
+    # encode the labels
+    label_indexer =  StringIndexer(inputCol=META_LABEL_COL, outputCol=meta_labelCol)
+    stages += [label_indexer]
+
+    # encode the binary features
+    bin_assembler = VectorAssembler(inputCols=META_FEATURES, outputCol="bin_features")
+    stages += [bin_assembler]
+
+    # encode the continuous features
+    cont_assembler = VectorAssembler(inputCols = META_CONT_FEATURES, outputCol="cont_features")
+    stages += [cont_assembler]
+    # normalize the continuous features
+    cont_scaler = StandardScaler(inputCol="cont_features", outputCol="cont_scaler",  withStd=True , withMean=True)
+    stages += [cont_scaler]
+
+    # pass all to the vector assembler to create a single sparse vector
+    all_assembler = VectorAssembler(inputCols=["bin_features", "cont_scaler"],
+                                    outputCol=meta_featuresCol)
+    stages += [all_assembler]
+
+    # add the models to the pipeline
+    stages += [meta_classifier]
+
+    # create a pipeline
+    pipeline = Pipeline(stages=stages)
+
+    return pipeline
