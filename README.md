@@ -3,8 +3,8 @@
 This is an updated and extended version of the capstone project for the Data Scientist Nanodegree with Udacity.
 
 There are two Medium blogs related to this project:
-- [User Activity Based Churn Prediction,](https://medium.com/@silviaonofrei/predict-churn-with-pyspark-b7cfe2fa139e)
-- [Models]
+- [User Activity Based Churn Prediction With PySpark on an AWS-EMR Cluster](https://medium.com/@silviaonofrei/user-activity-based-churn-prediction-with-pyspark-on-an-aws-emr-cluster-b7cfe2fa139e)
+- [Did Stacking Improve My PySpark Churn Prediction Model?](https://medium.com/@silviaonofrei/did-stacking-improve-my-pyspark-churn-prediction-model-230bdf3b9675)
 
 
 ![Likes, dislikes, upgrades, downgrades](./images/sparkify_songs.png)
@@ -21,7 +21,7 @@ There are two Medium blogs related to this project:
 
 ## General Information
 
-Predicting churn is an essential aspect for any online subscription business, such as a streaming music platform. In the present project, we are investigating and predicting churn for a fictional music platform called Sparkify.
+In the present project, we are investigating and predicting churn for a fictional music platform called Sparkify. This is a binary classification problem, in which the algorithm has to identify which users are most likely to churn.
 
 
 ## AWS-EMR Cluster Settings
@@ -64,8 +64,11 @@ The Kendall correlation rank, displayed below as a heatmap, assists in determini
 
 The performance of the two best models: Gradient Boosted Trees and the Multilayer Perceptron are displayed using ROC and PR curves:
 
-![pairwise correlations](./images/curves_best.png)
+![two classifiers](./images/curves_best.png)
 
+Table to compare the preformance metrics of the Multilayer Perceptron and of the Meta Classifier Linear Regression model:
+
+![mlpc and meta](./images/meta_net.png)
 
 ## Project Structure
 
@@ -79,7 +82,7 @@ There are three independent versions of the project:
 
 - `V2` - the data is processed as in `V1`, several features are removed to eliminate redundancies, there are 6 classifiers that are spot checked on the train set using 5-fold cross validation and default parameters, the best two classifiers (GBT and MLPC) are fine tuned with GridSearch and evaluated on the test set;
 
-- `V3` - the preprocessed data from `V2` is modeled using a stacked model tha consists of 6 classifiers as base predictors and a Linear Regression meta-classifier.
+- `V3` - the preprocessed data is modeled using a stacked model that consists of 6 classifiers as base predictors and a Linear Regression meta-classifier.
 
 ------------
 
@@ -102,7 +105,10 @@ There are three independent versions of the project:
             ├──Sparkify_Small_Data_Stacking_V3.ipynb
     │
     ├──reports
-        |── Churn_Prediction_Report.pdf    <- Full report of the project (V2). 
+        |── Churn_Prediction_Report.html  <- Report of the project (V2).
+        |── Churn_Stacking_Blog.html      <- Report of the project (V3).
+        |── References.html               <- List of sources for the project.
+        |
         ├──fullDataReports - static versions of notebooks
             ├──Sparkify_Full_Data_AWS_V1.html
             ├──Sparkify_Full_Data_Description_AWS_V2.html
@@ -134,7 +140,7 @@ There are three independent versions of the project:
 
 ## Acknowledgements
 
-- Many thanks to Udacity who suggested the problem and provided two interesting datasets.
+Many thanks to Udacity who suggested the problem and provided two interesting datasets.
 
 
 <!-- Optional -->
