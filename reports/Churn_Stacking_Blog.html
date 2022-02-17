@@ -1,0 +1,504 @@
+<!DOCTYPE html><html><head>
+      <title>Churn_Stacking_Blog</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////home/silvia/.atom/packages/markdown-preview-enhanced/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="did-stacking-improve-my-pyspark-churn-prediction-model">Did Stacking Improve My PySpark Churn Prediction Model?</h1>
+
+<p><br><br><br>
+<img src="imgs/sparkify_artists.png" width="800" height="300"><br>
+<br><br></p>
+<h2 class="mume-header" id="outline">Outline</h2>
+
+<p><em>This is the second of a two parts story. Here, I lay out the steps for building a simple stacking model using PySpark to predict users&apos; churn for a fictional music platform. The results are compared with the performance of the classifier discussed in the first part of the blog.</em></p>
+<h2 class="mume-header" id="1-introduction">1. Introduction</h2>
+
+<p>In <a href="https://medium.com/@silviaonofrei/user-activity-based-churn-prediction-with-pyspark-on-an-aws-emr-cluster-b7cfe2fa139e">User Activity Based Churn Prediction with PySpark on an AWS-EMR Cluster</a> I  describe in detail how to build a model to predict churn for a fictional online music platform named Sparkify.</p>
+<p>The data I work with has about 26 millions records of user logs and size of 12 GB. This dataset is transformed into a features dataset that has one row for each of its 22728 users. There are 18 predicting features used in modeling. The predicted feature, called <code>churn</code> is based on the user&apos;s visit to the <code>Cancellation Confirmation</code> page on the platform, with 1 indicating that the user churned.</p>
+<p>This features dataset is split into train and test set with a ratio of 7:3. Since the data is highly imbalanced towards the positive class, the split is done in such a way that the churn vs not-churn ratios are preserved in the two subsets (stratified split).</p>
+<p>I spot check 6 classifiers using 5-fold cross validation and default parameters on the train set. All these classifiers are implemented in PySpark library MLlib. These are: Logistic Regression (LR), Decision Trees (DT), Random Forest (RF), Gradient Boosted Trees (GBT), Multilayer Perceptron Classifier (MLPC) and Linear Support Vector Machine (LSVC).</p>
+<p>After comparing the relevant evaluators (in particular the F1-score and the PR-AUC score) I conclude that GBT and MLPC perform best on this dataset, and I continue with grid search to determine the optimal hyperparameter combinations for these models. The analysis of the evaluators on the test set indicates that the final best model is MLPC, a feedforward neural network with 4 layers and node distribution [18,8, 4, 2].</p>
+<img src="imgs/metrics_best.png" width="600" height="120">
+<p>All this work is done in PySpark, with some help from Pandas, Matplotlib and Seaborn for visualizations, on an AWS-EMR cluster.</p>
+<h2 class="mume-header" id="2-motivation">2. Motivation</h2>
+
+<p>One of issues I ran into while working on this project was the time needed for the classifers to train, in particular GBT was extremely slow. Because of this reason, I reduced the number of combinations included in grid search to 4 models for GBT, and it still took 3 hours to train (with 5-fold cross validation). The 18 MLPC models were trained in about one hour. The data processing and the modeling described above takes a total of about 5 hours on the AWS-EMR cluster (configured as described in the previous blog).</p>
+<p>As a challenge I decided to improve the above model by achieving better metrics values in a shorter training time, while still using only the classifiers from PySpark MLlib.</p>
+<h2 class="mume-header" id="3-the-method-stacking">3. The Method: Stacking</h2>
+
+<p>Stacking is an ensemble method (see <a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow-dp-1492032646/dp/1492032646/ref=dp_ob_title_bk">A. Geron</a>, Chpt. 7). It consists of several models that act as base predictors and a meta model that provides the final predictions.</p>
+<p>The base models are chosen to be different algorithms which achieve a wide range of results. The meta model is usually logistic regression (for classification), but any other algorithm can be chosen, see <a href="https://machinelearningmastery.com/essence-of-stacking-ensembles-for-machine-learning/">this post</a> by J. Brownlee for a great description of the stacking models.</p>
+<p>The base models are fit on the train set and they make predictions on the validation set. The meta model is trained on the dataset of predictions of the base models, and it then predicts on the test set.</p>
+<p>The <em>methodology</em> in this case is outlined as follows:</p>
+<ul>
+<li>the features dataframe is prepared as in the <a href="https://medium.com/@silviaonofrei/user-activity-based-churn-prediction-with-pyspark-on-an-aws-emr-cluster-b7cfe2fa139e">first part</a> of the blog,</li>
+<li>stratified split the dataset into a train set, a validation set and a test set with ratios 4:4:2,</li>
+<li>process and transform the data for modelling,</li>
+<li>fit 5 base classifiers (LR, RF, GBT, MLPC, LSVM) on the train set,</li>
+<li>use the base  models to make predictions on the validation set,</li>
+<li>create a meta features dataset that includes the predictions and the probabilities (when available) from the base classifiers, as well as the label column,</li>
+<li>train and fine tune a Logistic Regression meta model, using 5-fold cross validation and grid search on the meta features dataset,</li>
+<li>the tuned meta classifier makes predictions on the meta features set build from the test set.</li>
+</ul>
+<h2 class="mume-header" id="4-implementation">4. Implementation</h2>
+
+<p>And here are the steps with code a few comments included.</p>
+<p><strong>4.1 Stratified split the data into three subsets</strong></p>
+<pre data-role="codeBlock" data-info class="language-"><code>SPLIT_VALS = [.4, .4, .2]
+
+def split_data (df):
+
+    &quot;&quot;&quot;
+    Split the dataset into training, validation set and test set.
+    Use a stratified sampling method.
+
+    INPUT:
+        df (PySpark dataframe) - dataframe
+    OUTPUT:
+        train_set, validation_set, test_set (PySpark dataframes) -
+                          percentage split based on the provided values
+    &quot;&quot;&quot;
+
+    # split dataframes between 0s and 1s
+    zeros = df.filter(df[&quot;churn&quot;]==0)
+    ones = df.filter(df[&quot;churn&quot;]==1)
+
+    # split dataframes into training and testing
+    train0, validation0, test0 = zeros.randomSplit(SPLIT_VALS, seed=1234)
+    train1, validation1, test1 = ones.randomSplit(SPLIT_VALS, seed=1234)
+
+    # stack datasets back together
+    train_set = train0.union(train1)
+    validation_set = validation0.union(validation1)
+    test_set = test0.union(test1)
+
+    return train_set, validation_set, test_set
+</code></pre><p><strong>4.2 Instantiate the base classifiers</strong></p>
+<pre data-role="codeBlock" data-info class="language-"><code>#  the base classifiers
+
+lr = LogisticRegression(featuresCol=&apos;features&apos;, labelCol=&apos;label&apos;,
+                        predictionCol=&apos;pred_lr&apos;, probabilityCol=&apos;prob_lr&apos;,
+                        rawPredictionCol=&apos;rawPred_lr&apos;)
+
+rf = RandomForestClassifier(featuresCol=&apos;features&apos;, labelCol=&apos;label&apos;,
+                  predictionCol=&apos;pred_rf&apos;, probabilityCol=&apos;prob_rf&apos;,
+                  rawPredictionCol=&apos;rawPred_rf&apos;)
+
+gbt = GBTClassifier(featuresCol=&apos;features&apos;, labelCol=&apos;label&apos;,
+                    predictionCol=&apos;pred_gbt&apos;)
+
+layers=[18,8,4,2]
+mlpc= MultilayerPerceptronClassifier(featuresCol=&apos;features&apos;, labelCol=&apos;label&apos;,
+                                     predictionCol=&apos;pred_mlpc&apos;, probabilityCol=&apos;prob_mlpc&apos;,
+                                     rawPredictionCol=&apos;rawPred_mlpc&apos;, layers=layers)
+
+lsvc = LinearSVC(featuresCol=&apos;features&apos;, labelCol=&apos;label&apos;,
+                predictionCol=&apos;pred_lsvc&apos;, rawPredictionCol=&apos;rawPred_lsvc&apos;)
+
+models = [lr, rf, gbt, mlpc, lsvc]
+
+</code></pre><p>Comments regarding the base classifiers:</p>
+<ul>
+<li>for stacking we have to specify the name of each predictive column, to avoid confusion when we combine the predictions in the meta features dataset,</li>
+<li>the algorithms GBT and LSVC do not output probabilities,</li>
+<li>the algorithm GBT does not output raw predictions (see this <a href="https://medium.com/@rickykim78/hey-vijay-i-havent-declared-the-rawprediction-column-65de40d80cba">blog</a> for details).</li>
+</ul>
+<p><strong>4.3 Build a pipeline that transforms the data and creates the base models</strong></p>
+<pre data-role="codeBlock" data-info class="language-"><code>def build_data_pipeline():
+    &quot;&quot;&quot;
+    Combines all the stages of the data processing and base modeling.
+    &quot;&quot;&quot;
+    # stages in the pipeline
+    stages = []
+
+    # encode the labels
+    label_indexer =  StringIndexer(inputCol=CHURN_LABEL, outputCol=&quot;label&quot;)
+    stages += [label_indexer]
+
+    # combine the binary features in a vector
+    bin_assembler = VectorAssembler(inputCols=CAT_FEATURES, outputCol=&quot;bin_features&quot;)
+    stages += [bin_assembler]
+
+    # combine the continuous features in a single vector
+    cont_assembler = VectorAssembler(inputCols = CONT_FEATURES, outputCol=&quot;cont_features&quot;)
+    stages += [cont_assembler]
+    # standardize the continuous features
+    cont_scaler = StandardScaler(inputCol=&quot;cont_features&quot;, outputCol=&quot;cont_scaler&quot;,
+                                 withStd=True , withMean=True)
+    stages += [cont_scaler]
+
+    # combine all the features into a single column vector
+    all_assembler = VectorAssembler(inputCols=[&quot;bin_features&quot;, &quot;cont_scaler&quot;],
+                            outputCol=&quot;features&quot;)
+    stages += [all_assembler]
+
+    # add the base classifiers to the pipeline
+    stages += models
+
+    # create the pipeline
+    pipeline = Pipeline(stages=stages)
+
+    return pipeline
+</code></pre><p><strong>4.4 Fit the base classifiers on the train set and make predictions on the validation set</strong></p>
+<pre data-role="codeBlock" data-info class="language-"><code># instantiate the data pipeline to process and model data
+base_pipeline = build_data_pipeline()
+
+# fit the pipeline on the train set
+base_pipeline_model = base_pipeline.fit(train_set)
+
+# make predictions on the validation set
+base_pred = base_pipeline_model.transform(validation_set)
+
+</code></pre><p><strong>4.5 Create a meta features dataset</strong></p>
+<p>The <code>base_pred</code> is a dataframe that contains the predictive features, the labels as well as the columns created in the processing stage, and also the  predictions and probabilities columns given by the base classifiers:</p>
+<pre data-role="codeBlock" data-info class="language-"><code>root
+ |-- ...
+ |-- label: double (nullable = false)
+ |-- bin_features: vector (nullable = true)
+ |-- cont_features: vector (nullable = true)
+ |-- cont_scaler: vector (nullable = true)
+ |-- features: vector (nullable = true)
+ |-- rawPred_lr: vector (nullable = true)
+ |-- prob_lr: vector (nullable = true)
+ |-- pred_lr: double (nullable = false)
+ |-- rawPred_rf: vector (nullable = true)
+ |-- prob_rf: vector (nullable = true)
+ |-- pred_rf: double (nullable = false)
+ |-- rawPrediction: vector (nullable = true)
+ |-- probability: vector (nullable = true)
+ |-- pred_gbt: double (nullable = false)
+ |-- rawPred_mlpc: vector (nullable = true)
+ |-- prob_mlpc: vector (nullable = true)
+ |-- pred_mlpc: double (nullable = false)
+ |-- rawPred_lsvc: vector (nullable = true)
+ |-- pred_lsvc: double (nullable = false)
+</code></pre><p>Create a dataframe that contains the individual predictions and the individual probabilities of the base classifiers, and also the <code>label</code> column:</p>
+<pre data-role="codeBlock" data-info class="language-"><code># create the meta features dataset
+meta_cols = (&quot;pred_lr&quot;, &quot;prob_lr&quot;, &quot;pred_rf&quot;, &quot;prob_rf&quot;, &quot;pred_gbt&quot;,
+            &quot;pred_mlpc&quot;,&quot;prob_mlpc&quot;, &quot;pred_lsvc&quot;, &quot;label&quot;)
+meta_features_df = base_pred.select(*meta_cols)
+
+</code></pre><p><strong>4.6 Train and fine tune a Logistic Regression meta model</strong></p>
+<p>In order to complete this step we need to create a pipeline for the task, the <code>build_meta_pipeline</code> function is in essence the <code>build_data_pipeline</code> used for the base model, with adjustments to the sets of features and with the last stage replaced by the meta classifier.</p>
+<pre data-role="codeBlock" data-info class="language-"><code># instantiate the meta classifier
+meta_classifier = LogisticRegression(featuresCol=meta_featuresCol,
+                labelCol=meta_labelCol,
+                predictionCol=meta_predCol)
+
+# build the specific pipeline
+meta_pipeline = build_meta_pipeline(meta_classifier)
+
+# create the parameters list
+meta_param = ParamGridBuilder() \
+           .addGrid(meta_classifier.regParam, [0.0, 0.01, 0.1]) \
+           .addGrid(meta_classifier.elasticNetParam, [0.0, 0.01, 0.1]) \
+           .addGrid(meta_classifier.maxIter, [50, 100, 200]) \
+           .build()
+
+# build the grid search model
+meta_lr = grid_search_model(meta_pipeline, meta_param)
+
+# train the model
+meta_model = meta_lr.fit(meta_features_df)
+
+</code></pre><p><strong>4.7 Make predictions on the test set</strong></p>
+<pre data-role="codeBlock" data-info class="language-"><code>#  base classifiers make predictions on the test set
+&lt;p class=&quot;mume-header &quot; id=&quot;base-classifiers-make-predictions-on-the-test-set&quot;&gt;&lt;/p&gt;
+
+test_pred = base_pipeline_model.transform(test_ser)
+
+#  create the meta features test dataset
+&lt;p class=&quot;mume-header &quot; id=&quot;create-the-meta-features-test-dataset&quot;&gt;&lt;/p&gt;
+
+meta_test_df = test_pred.select(meta_cols)
+
+#  meta classifier predictions on the meta features test set
+&lt;p class=&quot;mume-header &quot; id=&quot;meta-classifier-predictions-on-the-meta-features-test-set&quot;&gt;&lt;/p&gt;
+
+meta_test_pred = meta_model.transform(meta_test_df)
+</code></pre><h2>5. Results</h2>
+<p>This whole process takes about <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>45</mn></mrow><annotation encoding="application/x-tex">45</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">45</span></span></span></span> minutes on the AWS-EMR cluster (see the first blog for configuration details), including the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>27</mn></mrow><annotation encoding="application/x-tex">27</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">27</span></span></span></span> hyperparameter combinations grid search for tuning the meta classifier. It seems that we reduced the training time quite a bit if we compare with the <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> hours needed to train and tune the models from the first part of the blog. However we have to keep in mind that we work with about half of data at a time now(the train set is only <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>40</mn><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">40\%</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord">40%</span></span></span></span> of the data instead of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>70</mn><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">70\%</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord">70%</span></span></span></span> from the first run).</p>
+<p>The choice of the meta classifier (logistic regression) also contributed to the training time reduction, being less complex than GBT or MLPC and therefore faster to train.</p>
+<p>The ROC and PR curves have good shapes, close to the standard desired behavior.</p>
+<img src="imgs/meta_roc.png" width="600" height="320">
+<p>Finally, let&apos;s compare the metrics for the two models: the meta classifier built above and the multi layer perceptron developed in the first part of the blog:</p>
+<img src="imgs/meta_net.png" width="600" height="120">
+<p>We observe that, except for recall, the stacking ensemble outperforms the multilayer perceptron. The improvement is more noticeable in the F1-score (and in particular in the precision scores), while the ROC_AUC and PR_AUC scores are just slightly higher.</p>
+<h2>6. Reflections</h2>
+<p>We see that using a simple minded stacking ensemble we can at least recover the results of a sophisticated classifier fine tuned with grid search and cross validation, but in a fraction of time.</p>
+<p>The performance of the stacking ensemble is influenced by the fact that we have less data available for training. I evaluated the model with a 4:3:3 split of the data and the values of the metrics were noticeably smaller.</p>
+<p>The simple stacking model can be improved by: using cross validation to train the base predictors (see this Kaggle thread for various ways to do this) or by increasing the pool of base predictors.</p>
+<p>In the end, the simple stacking model improved slightly the performance metrics and significantly reduced the training time.</p>
+<p>The full code for both parts of the project can be found on this <a href="https://github.com/SolanaO/udacity_ds_p4">Github repository</a>.</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
