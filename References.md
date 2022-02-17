@@ -3,9 +3,8 @@
 
 ### General
 
-- [Udacity Online Learning Platform.](https://www.udacity.com/)
 - A. Geron, *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow*, 2nd Edition, O'Reilly Media, Inc. (2019).
-- G. James, D. Witten, T. Hastie, R. Tibshirani, [An Introduction to Statistical Learning](https://www.statlearning.com/.)
+- G. James, D. Witten, T. Hastie, R. Tibshirani, [*An Introduction to Statistical Learning*](https://www.statlearning.com/.), Springer (2019).
 
 ### Data Understanding
 
@@ -33,6 +32,8 @@
 - [Python | Kendall Rank Correlation Coefficient](https://www.geeksforgeeks.org/python-kendall-rank-correlation-coefficient/), July 2021.
 - [The ZeroR Classifier](https://www.youtube.com/watch?v=kUbYN4AcPmA).
 - A. Lee, [Choosing a Baseline Accuracy for a Classification Model](https://towardsdatascience.com/calculating-a-baseline-accuracy-for-a-classification-model-a4b342ceb88f), Medium (May 2021).
+- J. Brownlee, [Stacking Ensemble Machine Learning with Python](https://machinelearningmastery.com/stacking-ensemble-machine-learning-with-python/), Machine Learning Mastery (April 2021).
+- J. Brownlee, [Essence of Stacking Ensembles for Machine Learning](https://machinelearningmastery.com/essence-of-stacking-ensembles-for-machine-learning/), Machine Learning Mastery (April 2021).
 
 ### Spark
 
