@@ -106,8 +106,11 @@ There are three independent versions of the project:
     │
     ├──reports
         |── Churn_Prediction_Report.html  <- Report of the project (V2).
-        |── Churn_Stacking_Blog.html      <- Report of the project (V3).
+        |── Churn_Prediction_Report.pdf  <- Report of the project (V2).
+        |── Churn_Stacking_Report.html      <- Report of the project (V3).
+        |── Churn_Stacking_Report.pdf      <- Report of the project (V3).
         |── References.html               <- List of sources for the project.
+        |── References.pdf               <- List of sources for the project.  
         |
         ├──fullDataReports - static versions of notebooks
             ├──Sparkify_Full_Data_AWS_V1.html
