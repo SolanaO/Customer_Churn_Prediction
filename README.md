@@ -1,7 +1,5 @@
 # User Activity Based Churn Prediction With PySpark on an AWS-EMR Cluster
 
-This is an updated and extended version of the capstone project for the Data Scientist Nanodegree with Udacity.
-
 There are two Medium blogs related to this project:
 - [User Activity Based Churn Prediction With PySpark on an AWS-EMR Cluster](https://medium.com/@silviaonofrei/user-activity-based-churn-prediction-with-pyspark-on-an-aws-emr-cluster-b7cfe2fa139e)
 - [Did Stacking Improve My PySpark Churn Prediction Model?](https://medium.com/@silviaonofrei/did-stacking-improve-my-pyspark-churn-prediction-model-230bdf3b9675)
@@ -72,7 +70,7 @@ Table to compare the preformance metrics of the Multilayer Perceptron and of the
 
 ## Project Structure
 
-Two datasets were used for this project, both too large to store on Github. The notebooks named `Sparkify_Small_Data*` refer to work done on the small datset of 128 MB. THe notebooks named `Sparkify_Full_Data*` refer to work done with the full dataset of 12 GB.
+Two datasets were used for this project, both too large to store on Github. The notebooks named `Sparkify_Small_Data` refer to work done on the small dataset of 128 MB. The notebooks named `Sparkify_Full_Data` refer to work done with the full dataset of 12 GB.
 
 The specification `AWS` means that the notebook is downloaded from AWS-EMR and has a PySpark kernel.
 
@@ -140,6 +138,9 @@ There are three independent versions of the project:
     |
     ├── .gitignore        <- Files to be ignored by Git.
     └──
+## Specifications
+
+This is an extended version of the capstone project I completed for the Data Scientist Nanodegree with Udacity.
 
 ## Acknowledgements
 
