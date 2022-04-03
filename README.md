@@ -13,6 +13,7 @@ There are two Medium blogs related to this project:
 * [Cloud Settings](#cloud)
 * [Local Installation Setup](#setup)
 * [Screenshots](#screenshots)
+* [Specifications](#specs)
 * [Acknowledgements](#acknowledgements)
 <!-- * [License](#license) -->
 
