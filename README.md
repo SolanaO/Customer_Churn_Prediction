@@ -9,10 +9,10 @@ There are two Medium blogs related to this project:
 
 ## Table of Contents
 * [General Information](#general-information)
-* [Technologies Used](#technologies-used)
-* [Cloud Settings](#cloud)
-* [Local Installation Setup](#setup)
+* [AWS-EMR Cluster Setiings](#aws-emr-cluster-settings)
+* [Local Installation Setup](#local-installation-setup)
 * [Screenshots](#screenshots)
+* [Project Structure](#project-structure)
 * [Specifications](#specs)
 * [Acknowledgements](#acknowledgements)
 <!-- * [License](#license) -->
@@ -35,7 +35,7 @@ To train the full dataset I used an AWS-EMR cluster with the following configura
 
 The project was run on EMR Notebooks with PySpark kernels.
 
-## Local Instalation Setup
+## Local Installation Setup
 
 The code is written on Anaconda Jupyter Notebook with a Python3 kernel. Additional libraries and modules used:
 - PySpark 3.1.2
@@ -109,7 +109,7 @@ There are three independent versions of the project:
         |── Churn_Stacking_Report.html      <- Report of the project (V3).
         |── Churn_Stacking_Report.pdf      <- Report of the project (V3).
         |── References.html               <- List of sources for the project.
-        |── References.pdf               <- List of sources for the project.  
+        |── References.pdf               <- List of sources for the project.
         |
         ├──fullDataReports - static versions of notebooks
             ├──Sparkify_Full_Data_AWS_V1.html
